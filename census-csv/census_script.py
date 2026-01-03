@@ -10,12 +10,12 @@ try:
 except FileNotFoundError as Err: 
     print(Err); exit()
 
-hint = max(len(l.split()) for l in curr_file) #--> hint the user on how many columns is needed on average
+hint = max(len(l.split()) for l in curr_file) #--> hint the user on how many columns is needed
 field = input(f"Field columns separated by commas, must be of length {hint}:").split(",")
 
 field_length = len(field)
 if (not field) or (field_length < hint):
-    emp_col = hint - field_length #--> get the columns left to match max line
+    emp_col = hint - field_length #--> get the max number of columns left to fill
 
     for fill in range(emp_col):
         field.append(f"None{fill}") #--> fill empty columns with None
@@ -24,7 +24,7 @@ with open("curr_file.csv", "w", encoding="utf-8") as file:
     csv_file = csv.DictWriter(file, field)
     csv_file.writeheader() #--> write header in the first row
 
-    for idx, lines in enumerate(curr_file, start=1):
+    for lines in curr_file:
         line = lines.split()
 
         contact = {}
